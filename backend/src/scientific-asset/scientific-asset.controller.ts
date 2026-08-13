@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Patch } from '@nestjs/common';
 import { ScientificAssetService } from './scientific-asset.service';
 
 @Controller('scientific-asset')
@@ -38,5 +38,10 @@ export class ScientificAssetController {
   @Delete(':id/sources/:sourceId')
   async removeSource(@Param('id') id: string, @Param('sourceId') sourceId: string) {
     return this.scientificAssetService.removeSource(id, sourceId);
+  }
+
+  @Patch(':id/approve')
+  async approve(@Param('id') id: string, @Body('reviewerId') reviewerId: string) {
+    return this.scientificAssetService.approve(id, reviewerId);
   }
 }

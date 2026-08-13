@@ -14,9 +14,10 @@ interface ScientificAsset {
   author: string;
   tags: string[];
   links: AssetLink[];
+  status?: string;
 }
 
-export function ScientificHubBoard() {
+export function ScientificHubBoard({ userRole = 'Alumno' }: { userRole?: string }) {
   // Mock Data
   const assets: ScientificAsset[] = [
     {
@@ -28,7 +29,8 @@ export function ScientificHubBoard() {
       links: [
         { url: "https://example.com/paper.pdf", type: "pdf" },
         { url: "https://example.com/data.xlsx", type: "sheets" }
-      ]
+      ],
+      status: "pending"
     },
     {
       id: "2",
@@ -38,7 +40,8 @@ export function ScientificHubBoard() {
       tags: ["Sustainability", "Agriculture", "Urban Planning"],
       links: [
         { url: "https://example.com/report.pdf", type: "pdf" }
-      ]
+      ],
+      status: "approved"
     }
   ];
 
@@ -62,12 +65,22 @@ export function ScientificHubBoard() {
                   {tag}
                 </span>
               ))}
+              {asset.status === 'pending' && (
+                <span className="px-2 py-1 bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 text-xs rounded-full font-medium">
+                  Pendiente
+                </span>
+              )}
             </div>
           </div>
           
           <div className="mt-auto pt-4 border-t border-border flex items-center justify-between relative z-10">
             <span className="text-sm font-medium text-foreground">{asset.author}</span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
+              {userRole === 'Profesor' && asset.status === 'pending' && (
+                <button className="text-xs bg-green-500/20 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-full hover:bg-green-500/30 transition-colors font-medium">
+                  Aprobar
+                </button>
+              )}
               {asset.links.map((link, idx) => (
                 <a 
                   key={idx}

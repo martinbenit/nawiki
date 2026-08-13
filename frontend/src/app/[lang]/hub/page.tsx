@@ -5,10 +5,31 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { BookOpen } from "lucide-react";
 import { getDictionary } from "@/dictionaries";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
 export default async function HubPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as 'en' | 'es-AR');
+  
+  const cookieStore = await cookies();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'example';
+  
+  const supabase = createServerClient(
+    supabaseUrl,
+    supabaseKey,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+      },
+    }
+  );
+
+  const { data: { user } } = await supabase.auth.getUser();
+  const userRole = user?.user_metadata?.role || 'Alumno';
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
@@ -35,7 +56,7 @@ export default async function HubPage({ params }: { params: Promise<{ lang: stri
               <p className="text-muted-foreground">Vetted knowledge repositories with Rackoot-style interactive cards.</p>
             </div>
           </div>
-          <ScientificHubBoard />
+          <ScientificHubBoard userRole={userRole} />
         </section>
 
         <section className="pt-8 border-t border-border">
@@ -43,7 +64,7 @@ export default async function HubPage({ params }: { params: Promise<{ lang: stri
             <h2 className="text-2xl font-bold tracking-tight mb-2">Peer Review Panel</h2>
             <p className="text-muted-foreground">Interactive split-screen for document review and real-time feedback.</p>
           </div>
-          <PeerReviewPanel />
+          <PeerReviewPanel userRole={userRole} />
         </section>
       </main>
       

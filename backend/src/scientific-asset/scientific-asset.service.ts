@@ -1,9 +1,13 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
+import { PushNotificationsService } from '../push-notifications/push-notifications.service';
 
 @Injectable()
 export class ScientificAssetService {
-  constructor(private readonly supabaseService: SupabaseService) {}
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly pushNotificationsService: PushNotificationsService,
+  ) {}
 
   async findAll() {
     const { data, error } = await this.supabaseService.getClient()
@@ -82,5 +86,28 @@ export class ScientificAssetService {
       .eq('asset_id', assetId);
     if (error) throw new BadRequestException(error.message);
     return { success: true };
+  }
+
+  async approve(id: string, reviewerId: string) {
+    const { data, error } = await this.supabaseService.getClient()
+      .from('ScientificAsset')
+      .update({ status: 'approved', reviewer_id: reviewerId })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw new BadRequestException(error.message);
+
+    const targetUserId = data?.user_id || data?.author_id || data?.created_by;
+    if (targetUserId) {
+      this.pushNotificationsService.sendNotification(targetUserId, {
+        title: 'Asset Approved',
+        body: 'Your scientific asset has been approved.',
+      }).catch(err => {
+        console.error('Failed to send push notification for asset approval:', err);
+      });
+    }
+
+    return data;
   }
 }
