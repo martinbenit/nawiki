@@ -1,0 +1,40 @@
+{
+  "landing": {
+    "login": "Login",
+    "register": "Register",
+    "badge": "The Future of Knowledge",
+    "title": "Welcome to NAWIKI",
+    "subtitle": "The vetted scientific hub for real-time collaboration and peer review.",
+    "getStarted": "Get Started",
+    "exploreHub": "Explore Hub",
+    "features": {
+      "vetted": {
+        "title": "Vetted Knowledge",
+        "desc": "Access peer-reviewed repositories of scientific information."
+      },
+      "fast": {
+        "title": "Lightning Fast",
+        "desc": "Real-time updates and interactive cards for seamless research."
+      },
+      "global": {
+        "title": "Global Community",
+        "desc": "Connect with researchers and scientists across the globe."
+      }
+    }
+  },
+  "nav": {
+    "hub": "Scientific Hub"
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Login to your account",
+    "registerTitle": "Create an Account",
+    "registerSubtitle": "Join the scientific community",
+    "email": "Email",
+    "password": "Password",
+    "submitLogin": "Login",
+    "submitRegister": "Create Account",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  }
+}

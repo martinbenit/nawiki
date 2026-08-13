@@ -1,0 +1,40 @@
+{
+  "landing": {
+    "login": "Ingresar",
+    "register": "Registrarse",
+    "badge": "El Futuro del Conocimiento",
+    "title": "Bienvenido a NAWIKI",
+    "subtitle": "El hub científico curado para colaboración y revisión por pares en tiempo real.",
+    "getStarted": "Comenzar",
+    "exploreHub": "Explorar Hub",
+    "features": {
+      "vetted": {
+        "title": "Conocimiento Curado",
+        "desc": "Accede a repositorios de información científica revisados por pares."
+      },
+      "fast": {
+        "title": "Ultrarrápido",
+        "desc": "Actualizaciones en tiempo real y tarjetas interactivas para investigación fluida."
+      },
+      "global": {
+        "title": "Comunidad Global",
+        "desc": "Conecta con investigadores y científicos de todo el mundo."
+      }
+    }
+  },
+  "nav": {
+    "hub": "Hub Científico"
+  },
+  "auth": {
+    "loginTitle": "Bienvenido de nuevo",
+    "loginSubtitle": "Ingresa a tu cuenta",
+    "registerTitle": "Crear una Cuenta",
+    "registerSubtitle": "Únete a la comunidad científica",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "submitLogin": "Ingresar",
+    "submitRegister": "Crear Cuenta",
+    "noAccount": "¿No tienes cuenta?",
+    "haveAccount": "¿Ya tienes cuenta?"
+  }
+}

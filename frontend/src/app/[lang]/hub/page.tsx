@@ -2,9 +2,14 @@ import { ScientificHubBoard } from "@/components/ScientificHubBoard";
 import { PeerReviewPanel } from "@/components/PeerReviewPanel";
 import { CRUDModals } from "@/components/CRUDModals";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { BookOpen } from "lucide-react";
+import { getDictionary } from "@/dictionaries";
 
-export default function Home() {
+export default async function HubPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang as 'en' | 'es-AR');
+
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -15,6 +20,7 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4">
+            <LanguageSwitcher currentLang={lang} />
             <CRUDModals />
             <ThemeSwitcher />
           </div>
@@ -22,11 +28,10 @@ export default function Home() {
       </header>
 
       <main className="flex-1 container mx-auto px-4 py-8 space-y-12">
-        
         <section>
           <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight mb-2">Scientific Hub</h1>
+              <h1 className="text-3xl font-bold tracking-tight mb-2">{dict.nav.hub}</h1>
               <p className="text-muted-foreground">Vetted knowledge repositories with Rackoot-style interactive cards.</p>
             </div>
           </div>
@@ -40,7 +45,6 @@ export default function Home() {
           </div>
           <PeerReviewPanel />
         </section>
-
       </main>
       
       <footer className="border-t border-border py-6 mt-auto">
